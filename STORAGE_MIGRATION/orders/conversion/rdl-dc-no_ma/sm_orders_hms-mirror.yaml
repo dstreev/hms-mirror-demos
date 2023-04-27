@@ -41,7 +41,7 @@ tableMirrors:
         cleanUpSql: []
         defined: false
       LEFT:
-        name: "order_item_orc_f97aacfcc6fe4ba897b4ef6bafe594d7"
+        name: "order_item_orc_bc2337c7e08e4c869f599c2b7fa79127"
         exists: true
         createStrategy: "NOTHING"
         definition:
@@ -79,21 +79,18 @@ tableMirrors:
           action: "ALTER TABLE order_item_orc UNSET TBLPROPERTIES (\"TRANSLATED_TO_EXTERNAL\"\
             )"
         - description: "Rename table"
-          action: " ALTER TABLE order_item_orc RENAME TO order_item_orc_f97aacfcc6fe4ba897b4ef6bafe594d7"
+          action: " ALTER TABLE order_item_orc RENAME TO order_item_orc_bc2337c7e08e4c869f599c2b7fa79127"
         - description: "Creating Table"
           action: "CREATE EXTERNAL TABLE `order_item_orc`(\n`order_id` string,\n`order_item_id`\
             \ string,\n`product_id` string,\n`quantity` bigint,\n`cost` double)\n\
             ROW FORMAT SERDE\n'org.apache.hadoop.hive.ql.io.orc.OrcSerde'\nSTORED\
             \ AS INPUTFORMAT\n'org.apache.hadoop.hive.ql.io.orc.OrcInputFormat'\n\
             OUTPUTFORMAT\n'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'\nTBLPROPERTIES\
-            \ (\n'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',\n'TRANSLATED_TO_EXTERNAL'='TRUE',\n\
+            \ (\n'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:49',\n'TRANSLATED_TO_EXTERNAL'='TRUE',\n\
             'bucketing_version'='2',\n'external.table.purge'='false'\n)"
-        - description: "Moving data to new Namespace"
-          action: "FROM order_item_orc_f97aacfcc6fe4ba897b4ef6bafe594d7 INSERT OVERWRITE\
-            \ TABLE order_item_orc SELECT *"
         cleanUpSql:
         - description: "Drop table"
-          action: "DROP TABLE IF EXISTS order_item_orc_f97aacfcc6fe4ba897b4ef6bafe594d7"
+          action: "DROP TABLE IF EXISTS order_item_orc_bc2337c7e08e4c869f599c2b7fa79127"
         defined: true
       RIGHT:
         name: "order_item_orc"
@@ -113,7 +110,7 @@ tableMirrors:
         - "OUTPUTFORMAT"
         - "'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'"
         - "TBLPROPERTIES ("
-        - "'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',"
+        - "'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:49',"
         - "'TRANSLATED_TO_EXTERNAL'='TRUE',"
         - "'bucketing_version'='2',"
         - "'external.table.purge'='false'"
@@ -123,7 +120,7 @@ tableMirrors:
         partitions: []
         actions: []
         addProperties:
-          hmsMirror_Metadata_Stage1: "2023-04-26 19:55:56"
+          hmsMirror_Metadata_Stage1: "2023-04-26 19:57:49"
         issues:
         - "'reset-to-default-location' was specified.  Table definition stripped of\
           \ LOCATION.  Location will be determined by the database or system warehouse\
@@ -166,7 +163,7 @@ tableMirrors:
         cleanUpSql: []
         defined: false
       LEFT:
-        name: "order_item_small_orc_6a347f8621c4467286f564c57a6e709c"
+        name: "order_item_small_orc_6c23b16234cb4fab97831fcbb9f7a24f"
         exists: true
         createStrategy: "NOTHING"
         definition:
@@ -197,20 +194,17 @@ tableMirrors:
         - description: "Selecting DB"
           action: "USE sm_orders"
         - description: "Rename table"
-          action: " ALTER TABLE order_item_small_orc RENAME TO order_item_small_orc_6a347f8621c4467286f564c57a6e709c"
+          action: " ALTER TABLE order_item_small_orc RENAME TO order_item_small_orc_6c23b16234cb4fab97831fcbb9f7a24f"
         - description: "Creating Table"
           action: "CREATE EXTERNAL TABLE `order_item_small_orc`(\n`order_id` string,\n\
             `order_item_id` string,\n`product_id` string,\n`quantity` bigint,\n`cost`\
             \ double)\nROW FORMAT SERDE\n'org.apache.hadoop.hive.ql.io.orc.OrcSerde'\n\
             STORED AS INPUTFORMAT\n'org.apache.hadoop.hive.ql.io.orc.OrcInputFormat'\n\
             OUTPUTFORMAT\n'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'\nTBLPROPERTIES\
-            \ (\n'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',\n'bucketing_version'='2')"
-        - description: "Moving data to new Namespace"
-          action: "FROM order_item_small_orc_6a347f8621c4467286f564c57a6e709c INSERT\
-            \ OVERWRITE TABLE order_item_small_orc SELECT *"
+            \ (\n'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:49',\n'bucketing_version'='2')"
         cleanUpSql:
         - description: "Drop table"
-          action: "DROP TABLE IF EXISTS order_item_small_orc_6a347f8621c4467286f564c57a6e709c"
+          action: "DROP TABLE IF EXISTS order_item_small_orc_6c23b16234cb4fab97831fcbb9f7a24f"
         defined: true
       RIGHT:
         name: "order_item_small_orc"
@@ -230,14 +224,14 @@ tableMirrors:
         - "OUTPUTFORMAT"
         - "'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'"
         - "TBLPROPERTIES ("
-        - "'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',"
+        - "'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:49',"
         - "'bucketing_version'='2')"
         partitioned: false
         owner: null
         partitions: []
         actions: []
         addProperties:
-          hmsMirror_Metadata_Stage1: "2023-04-26 19:55:56"
+          hmsMirror_Metadata_Stage1: "2023-04-26 19:57:49"
         issues:
         - "'reset-to-default-location' was specified.  Table definition stripped of\
           \ LOCATION.  Location will be determined by the database or system warehouse\
@@ -280,7 +274,7 @@ tableMirrors:
         cleanUpSql: []
         defined: false
       LEFT:
-        name: "order_orc_3c1ba6c1188f4260941e638b1089bf6b"
+        name: "order_orc_32fb873f2f7347e0bffc99ad65037e03"
         exists: true
         createStrategy: "NOTHING"
         definition:
@@ -310,19 +304,16 @@ tableMirrors:
         - description: "Selecting DB"
           action: "USE sm_orders"
         - description: "Rename table"
-          action: " ALTER TABLE order_orc RENAME TO order_orc_3c1ba6c1188f4260941e638b1089bf6b"
+          action: " ALTER TABLE order_orc RENAME TO order_orc_32fb873f2f7347e0bffc99ad65037e03"
         - description: "Creating Table"
           action: "CREATE EXTERNAL TABLE `order_orc`(\n`id` string,\n`user_id` string,\n\
             `order_date` date,\n`status` string)\nROW FORMAT SERDE\n'org.apache.hadoop.hive.ql.io.orc.OrcSerde'\n\
             STORED AS INPUTFORMAT\n'org.apache.hadoop.hive.ql.io.orc.OrcInputFormat'\n\
             OUTPUTFORMAT\n'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'\nTBLPROPERTIES\
-            \ (\n'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',\n'bucketing_version'='2')"
-        - description: "Moving data to new Namespace"
-          action: "FROM order_orc_3c1ba6c1188f4260941e638b1089bf6b INSERT OVERWRITE\
-            \ TABLE order_orc SELECT *"
+            \ (\n'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:49',\n'bucketing_version'='2')"
         cleanUpSql:
         - description: "Drop table"
-          action: "DROP TABLE IF EXISTS order_orc_3c1ba6c1188f4260941e638b1089bf6b"
+          action: "DROP TABLE IF EXISTS order_orc_32fb873f2f7347e0bffc99ad65037e03"
         defined: true
       RIGHT:
         name: "order_orc"
@@ -341,14 +332,14 @@ tableMirrors:
         - "OUTPUTFORMAT"
         - "'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'"
         - "TBLPROPERTIES ("
-        - "'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',"
+        - "'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:49',"
         - "'bucketing_version'='2')"
         partitioned: false
         owner: null
         partitions: []
         actions: []
         addProperties:
-          hmsMirror_Metadata_Stage1: "2023-04-26 19:55:56"
+          hmsMirror_Metadata_Stage1: "2023-04-26 19:57:49"
         issues:
         - "'reset-to-default-location' was specified.  Table definition stripped of\
           \ LOCATION.  Location will be determined by the database or system warehouse\
@@ -391,7 +382,7 @@ tableMirrors:
         cleanUpSql: []
         defined: false
       LEFT:
-        name: "order_small_orc_c8e55d45a14e4b59911c7db7df32f52a"
+        name: "order_small_orc_92017acc309d42b9a1b76266b0c0c7c2"
         exists: true
         createStrategy: "NOTHING"
         definition:
@@ -421,19 +412,16 @@ tableMirrors:
         - description: "Selecting DB"
           action: "USE sm_orders"
         - description: "Rename table"
-          action: " ALTER TABLE order_small_orc RENAME TO order_small_orc_c8e55d45a14e4b59911c7db7df32f52a"
+          action: " ALTER TABLE order_small_orc RENAME TO order_small_orc_92017acc309d42b9a1b76266b0c0c7c2"
         - description: "Creating Table"
           action: "CREATE EXTERNAL TABLE `order_small_orc`(\n`id` string,\n`user_id`\
             \ string,\n`order_date` date,\n`status` string)\nROW FORMAT SERDE\n'org.apache.hadoop.hive.ql.io.orc.OrcSerde'\n\
             STORED AS INPUTFORMAT\n'org.apache.hadoop.hive.ql.io.orc.OrcInputFormat'\n\
             OUTPUTFORMAT\n'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'\nTBLPROPERTIES\
-            \ (\n'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',\n'bucketing_version'='2')"
-        - description: "Moving data to new Namespace"
-          action: "FROM order_small_orc_c8e55d45a14e4b59911c7db7df32f52a INSERT OVERWRITE\
-            \ TABLE order_small_orc SELECT *"
+            \ (\n'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:49',\n'bucketing_version'='2')"
         cleanUpSql:
         - description: "Drop table"
-          action: "DROP TABLE IF EXISTS order_small_orc_c8e55d45a14e4b59911c7db7df32f52a"
+          action: "DROP TABLE IF EXISTS order_small_orc_92017acc309d42b9a1b76266b0c0c7c2"
         defined: true
       RIGHT:
         name: "order_small_orc"
@@ -452,14 +440,14 @@ tableMirrors:
         - "OUTPUTFORMAT"
         - "'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'"
         - "TBLPROPERTIES ("
-        - "'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',"
+        - "'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:49',"
         - "'bucketing_version'='2')"
         partitioned: false
         owner: null
         partitions: []
         actions: []
         addProperties:
-          hmsMirror_Metadata_Stage1: "2023-04-26 19:55:56"
+          hmsMirror_Metadata_Stage1: "2023-04-26 19:57:49"
         issues:
         - "'reset-to-default-location' was specified.  Table definition stripped of\
           \ LOCATION.  Location will be determined by the database or system warehouse\
@@ -502,7 +490,7 @@ tableMirrors:
         cleanUpSql: []
         defined: false
       LEFT:
-        name: "order_src_c13a9d6402374c1e9b6c95a8dd5b01e1"
+        name: "order_src_7d7e33290c2d4e2a913cb027bfe7601b"
         exists: true
         createStrategy: "NOTHING"
         definition:
@@ -534,7 +522,7 @@ tableMirrors:
         - description: "Selecting DB"
           action: "USE sm_orders"
         - description: "Rename table"
-          action: " ALTER TABLE order_src RENAME TO order_src_c13a9d6402374c1e9b6c95a8dd5b01e1"
+          action: " ALTER TABLE order_src RENAME TO order_src_7d7e33290c2d4e2a913cb027bfe7601b"
         - description: "Creating Table"
           action: "CREATE EXTERNAL TABLE `order_src`(\n`id` string COMMENT 'from deserializer',\n\
             `user_id` string COMMENT 'from deserializer',\n`order_date` date COMMENT\
@@ -543,14 +531,11 @@ tableMirrors:
             \ `quantity`:bigint, `cost`:double>> COMMENT 'from deserializer')\nROW\
             \ FORMAT SERDE\n'org.apache.hadoop.hive.serde2.JsonSerDe'\nSTORED AS INPUTFORMAT\n\
             'org.apache.hadoop.mapred.TextInputFormat'\nOUTPUTFORMAT\n'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'\n\
-            TBLPROPERTIES (\n'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',\n\
+            TBLPROPERTIES (\n'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:50',\n\
             'bucketing_version'='2')"
-        - description: "Moving data to new Namespace"
-          action: "FROM order_src_c13a9d6402374c1e9b6c95a8dd5b01e1 INSERT OVERWRITE\
-            \ TABLE order_src SELECT *"
         cleanUpSql:
         - description: "Drop table"
-          action: "DROP TABLE IF EXISTS order_src_c13a9d6402374c1e9b6c95a8dd5b01e1"
+          action: "DROP TABLE IF EXISTS order_src_7d7e33290c2d4e2a913cb027bfe7601b"
         defined: true
       RIGHT:
         name: "order_src"
@@ -571,14 +556,14 @@ tableMirrors:
         - "OUTPUTFORMAT"
         - "'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'"
         - "TBLPROPERTIES ("
-        - "'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',"
+        - "'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:50',"
         - "'bucketing_version'='2')"
         partitioned: false
         owner: null
         partitions: []
         actions: []
         addProperties:
-          hmsMirror_Metadata_Stage1: "2023-04-26 19:55:56"
+          hmsMirror_Metadata_Stage1: "2023-04-26 19:57:50"
         issues:
         - "'reset-to-default-location' was specified.  Table definition stripped of\
           \ LOCATION.  Location will be determined by the database or system warehouse\

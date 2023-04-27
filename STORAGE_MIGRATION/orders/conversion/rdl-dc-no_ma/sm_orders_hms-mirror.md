@@ -6,7 +6,7 @@ v.1.5.4.6-SNAPSHOT
 
 | Date | Elapsed Time |
 |:---|:---|
-| 2023-04-26 19:55:56 | 1.68 secs |
+| 2023-04-26 19:57:50 | 1.62 secs |
 
 ## Config:
 ```
@@ -47,7 +47,7 @@ clusters:
     partitionDiscovery:
       auto: true
       initMSCK: true
-commandLineOptions: "[-d, STORAGE_MIGRATION, -db, sm_orders, -smn, ofs://OHOME90,\
+commandLineOptions: "[-d, STORAGE_MIGRATION, -db, sm_orders, -dc, -smn, ofs://OHOME90,\
   \ -ewd, /finance/operations-ext, -wd, /finance/operations-mngd, -rdl, -o, conversion/rdl-dc-no_ma]"
 copyAvroSchemaUrls: false
 dataStrategy: "STORAGE_MIGRATION"
@@ -106,7 +106,7 @@ transfer:
   commonStorage: "ofs://OHOME90"
   storageMigration:
     strategy: "SQL"
-    distcp: false
+    distcp: true
     dataFlow: "PULL"
   warehouse:
     managedDirectory: "/finance/operations-mngd"
@@ -116,7 +116,7 @@ transferOwnership: false
 ```
 
 ### Config Warnings:
-- 54:To get the `distcp` workplans add `-dc|--distcp` to commandline.
+- 59:Using the options `-dc` and `-rdl` together may yield some inconsistent results. __If the 'current' table locations don't match the table name__, `distcp` will NOT realign those directories to the table names.  Which means the adjusted tables may not align with the directories. See: [Issue #35](https://github.com/cloudera-labs/hms-mirror/issues/35) for work going on to address this.
 
 ## Database SQL Statement(s)
 
@@ -160,26 +160,16 @@ ALTER DATABASE sm_orders SET MANAGEDLOCATION "ofs://OHOME90/finance/operations-m
 <td>
 </td>
 <td>SUCCESS</td>
-<td>.04</td>
+<td>.02</td>
 <td> </td>
 <td>
 <table>
 <tr>
 <td>.00</td><td>init</td><td></td></tr>
 <tr>
-<td>.55</td><td>LEFT</td><td>Fetched Schema</td></tr>
+<td>.56</td><td>LEFT</td><td>Fetched Schema</td></tr>
 <tr>
-<td>.77</td><td>TRANSFER</td><td>STORAGE_MIGRATION</td></tr>
-<tr>
-<td>.04</td><td>LEFT</td><td>Sql Run Complete for: Selecting DB</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Remove table property</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Rename table</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Creating Table</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Moving data to new Namespace</td></tr>
+<td>.67</td><td>TRANSFER</td><td>STORAGE_MIGRATION</td></tr>
 </table>
 </td>
 <td>
@@ -188,7 +178,7 @@ ALTER DATABASE sm_orders SET MANAGEDLOCATION "ofs://OHOME90/finance/operations-m
 </tr>
 <tr>
 <td>hmsMirror_Metadata_Stage1</td>
-<td>2023-04-26 19:55:56</td>
+<td>2023-04-26 19:57:49</td>
 </tr>
 </table></td>
 <td>
@@ -213,7 +203,7 @@ ALTER DATABASE sm_orders SET MANAGEDLOCATION "ofs://OHOME90/finance/operations-m
 </tr>
 <tr>
 <td>Rename table</td>
-<td> ALTER TABLE order_item_orc RENAME TO order_item_orc_f97aacfcc6fe4ba897b4ef6bafe594d7</td>
+<td> ALTER TABLE order_item_orc RENAME TO order_item_orc_bc2337c7e08e4c869f599c2b7fa79127</td>
 </tr>
 <tr>
 <td>Creating Table</td>
@@ -230,19 +220,15 @@ STORED AS INPUTFORMAT
 OUTPUTFORMAT
 'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'
 TBLPROPERTIES (
-'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',
+'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:49',
 'TRANSLATED_TO_EXTERNAL'='TRUE',
 'bucketing_version'='2',
 'external.table.purge'='false'
 )</td>
 </tr>
 <tr>
-<td>Moving data to new Namespace</td>
-<td>FROM order_item_orc_f97aacfcc6fe4ba897b4ef6bafe594d7 INSERT OVERWRITE TABLE order_item_orc SELECT *</td>
-</tr>
-<tr>
 <td>Drop table</td>
-<td>DROP TABLE IF EXISTS order_item_orc_f97aacfcc6fe4ba897b4ef6bafe594d7</td>
+<td>DROP TABLE IF EXISTS order_item_orc_bc2337c7e08e4c869f599c2b7fa79127</td>
 </tr>
 </table></td>
 </tr>
@@ -260,17 +246,9 @@ TBLPROPERTIES (
 <tr>
 <td>.00</td><td>init</td><td></td></tr>
 <tr>
-<td>1.26</td><td>LEFT</td><td>Fetched Schema</td></tr>
+<td>1.22</td><td>LEFT</td><td>Fetched Schema</td></tr>
 <tr>
-<td>.06</td><td>TRANSFER</td><td>STORAGE_MIGRATION</td></tr>
-<tr>
-<td>.03</td><td>LEFT</td><td>Sql Run Complete for: Selecting DB</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Rename table</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Creating Table</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Moving data to new Namespace</td></tr>
+<td>.02</td><td>TRANSFER</td><td>STORAGE_MIGRATION</td></tr>
 </table>
 </td>
 <td>
@@ -279,7 +257,7 @@ TBLPROPERTIES (
 </tr>
 <tr>
 <td>hmsMirror_Metadata_Stage1</td>
-<td>2023-04-26 19:55:56</td>
+<td>2023-04-26 19:57:49</td>
 </tr>
 </table></td>
 <td>
@@ -300,7 +278,7 @@ TBLPROPERTIES (
 </tr>
 <tr>
 <td>Rename table</td>
-<td> ALTER TABLE order_item_small_orc RENAME TO order_item_small_orc_6a347f8621c4467286f564c57a6e709c</td>
+<td> ALTER TABLE order_item_small_orc RENAME TO order_item_small_orc_6c23b16234cb4fab97831fcbb9f7a24f</td>
 </tr>
 <tr>
 <td>Creating Table</td>
@@ -317,16 +295,12 @@ STORED AS INPUTFORMAT
 OUTPUTFORMAT
 'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'
 TBLPROPERTIES (
-'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',
+'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:49',
 'bucketing_version'='2')</td>
 </tr>
 <tr>
-<td>Moving data to new Namespace</td>
-<td>FROM order_item_small_orc_6a347f8621c4467286f564c57a6e709c INSERT OVERWRITE TABLE order_item_small_orc SELECT *</td>
-</tr>
-<tr>
 <td>Drop table</td>
-<td>DROP TABLE IF EXISTS order_item_small_orc_6a347f8621c4467286f564c57a6e709c</td>
+<td>DROP TABLE IF EXISTS order_item_small_orc_6c23b16234cb4fab97831fcbb9f7a24f</td>
 </tr>
 </table></td>
 </tr>
@@ -337,24 +311,16 @@ TBLPROPERTIES (
 <td>
 </td>
 <td>SUCCESS</td>
-<td>.04</td>
+<td>.02</td>
 <td> </td>
 <td>
 <table>
 <tr>
 <td>.00</td><td>init</td><td></td></tr>
 <tr>
-<td>1.30</td><td>LEFT</td><td>Fetched Schema</td></tr>
+<td>.90</td><td>LEFT</td><td>Fetched Schema</td></tr>
 <tr>
-<td>.02</td><td>TRANSFER</td><td>STORAGE_MIGRATION</td></tr>
-<tr>
-<td>.04</td><td>LEFT</td><td>Sql Run Complete for: Selecting DB</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Rename table</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Creating Table</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Moving data to new Namespace</td></tr>
+<td>.34</td><td>TRANSFER</td><td>STORAGE_MIGRATION</td></tr>
 </table>
 </td>
 <td>
@@ -363,7 +329,7 @@ TBLPROPERTIES (
 </tr>
 <tr>
 <td>hmsMirror_Metadata_Stage1</td>
-<td>2023-04-26 19:55:56</td>
+<td>2023-04-26 19:57:49</td>
 </tr>
 </table></td>
 <td>
@@ -384,7 +350,7 @@ TBLPROPERTIES (
 </tr>
 <tr>
 <td>Rename table</td>
-<td> ALTER TABLE order_orc RENAME TO order_orc_3c1ba6c1188f4260941e638b1089bf6b</td>
+<td> ALTER TABLE order_orc RENAME TO order_orc_32fb873f2f7347e0bffc99ad65037e03</td>
 </tr>
 <tr>
 <td>Creating Table</td>
@@ -400,16 +366,12 @@ STORED AS INPUTFORMAT
 OUTPUTFORMAT
 'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'
 TBLPROPERTIES (
-'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',
+'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:49',
 'bucketing_version'='2')</td>
 </tr>
 <tr>
-<td>Moving data to new Namespace</td>
-<td>FROM order_orc_3c1ba6c1188f4260941e638b1089bf6b INSERT OVERWRITE TABLE order_orc SELECT *</td>
-</tr>
-<tr>
 <td>Drop table</td>
-<td>DROP TABLE IF EXISTS order_orc_3c1ba6c1188f4260941e638b1089bf6b</td>
+<td>DROP TABLE IF EXISTS order_orc_32fb873f2f7347e0bffc99ad65037e03</td>
 </tr>
 </table></td>
 </tr>
@@ -420,24 +382,16 @@ TBLPROPERTIES (
 <td>
 </td>
 <td>SUCCESS</td>
-<td>.04</td>
+<td>.02</td>
 <td> </td>
 <td>
 <table>
 <tr>
 <td>.00</td><td>init</td><td></td></tr>
 <tr>
-<td>1.24</td><td>LEFT</td><td>Fetched Schema</td></tr>
+<td>1.21</td><td>LEFT</td><td>Fetched Schema</td></tr>
 <tr>
-<td>.08</td><td>TRANSFER</td><td>STORAGE_MIGRATION</td></tr>
-<tr>
-<td>.04</td><td>LEFT</td><td>Sql Run Complete for: Selecting DB</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Rename table</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Creating Table</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Moving data to new Namespace</td></tr>
+<td>.03</td><td>TRANSFER</td><td>STORAGE_MIGRATION</td></tr>
 </table>
 </td>
 <td>
@@ -446,7 +400,7 @@ TBLPROPERTIES (
 </tr>
 <tr>
 <td>hmsMirror_Metadata_Stage1</td>
-<td>2023-04-26 19:55:56</td>
+<td>2023-04-26 19:57:49</td>
 </tr>
 </table></td>
 <td>
@@ -467,7 +421,7 @@ TBLPROPERTIES (
 </tr>
 <tr>
 <td>Rename table</td>
-<td> ALTER TABLE order_small_orc RENAME TO order_small_orc_c8e55d45a14e4b59911c7db7df32f52a</td>
+<td> ALTER TABLE order_small_orc RENAME TO order_small_orc_92017acc309d42b9a1b76266b0c0c7c2</td>
 </tr>
 <tr>
 <td>Creating Table</td>
@@ -483,16 +437,12 @@ STORED AS INPUTFORMAT
 OUTPUTFORMAT
 'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat'
 TBLPROPERTIES (
-'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',
+'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:49',
 'bucketing_version'='2')</td>
 </tr>
 <tr>
-<td>Moving data to new Namespace</td>
-<td>FROM order_small_orc_c8e55d45a14e4b59911c7db7df32f52a INSERT OVERWRITE TABLE order_small_orc SELECT *</td>
-</tr>
-<tr>
 <td>Drop table</td>
-<td>DROP TABLE IF EXISTS order_small_orc_c8e55d45a14e4b59911c7db7df32f52a</td>
+<td>DROP TABLE IF EXISTS order_small_orc_92017acc309d42b9a1b76266b0c0c7c2</td>
 </tr>
 </table></td>
 </tr>
@@ -503,24 +453,16 @@ TBLPROPERTIES (
 <td>
 </td>
 <td>SUCCESS</td>
-<td>.01</td>
+<td>.00</td>
 <td> </td>
 <td>
 <table>
 <tr>
 <td>.00</td><td>init</td><td></td></tr>
 <tr>
-<td>1.25</td><td>LEFT</td><td>Fetched Schema</td></tr>
+<td>1.22</td><td>LEFT</td><td>Fetched Schema</td></tr>
 <tr>
-<td>.10</td><td>TRANSFER</td><td>STORAGE_MIGRATION</td></tr>
-<tr>
-<td>.01</td><td>LEFT</td><td>Sql Run Complete for: Selecting DB</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Rename table</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Creating Table</td></tr>
-<tr>
-<td>.00</td><td>LEFT</td><td>Sql Run Complete for: Moving data to new Namespace</td></tr>
+<td>.04</td><td>TRANSFER</td><td>STORAGE_MIGRATION</td></tr>
 </table>
 </td>
 <td>
@@ -529,7 +471,7 @@ TBLPROPERTIES (
 </tr>
 <tr>
 <td>hmsMirror_Metadata_Stage1</td>
-<td>2023-04-26 19:55:56</td>
+<td>2023-04-26 19:57:50</td>
 </tr>
 </table></td>
 <td>
@@ -553,7 +495,7 @@ TBLPROPERTIES (
 </tr>
 <tr>
 <td>Rename table</td>
-<td> ALTER TABLE order_src RENAME TO order_src_c13a9d6402374c1e9b6c95a8dd5b01e1</td>
+<td> ALTER TABLE order_src RENAME TO order_src_7d7e33290c2d4e2a913cb027bfe7601b</td>
 </tr>
 <tr>
 <td>Creating Table</td>
@@ -570,16 +512,12 @@ STORED AS INPUTFORMAT
 OUTPUTFORMAT
 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
 TBLPROPERTIES (
-'hmsMirror_Metadata_Stage1'='2023-04-26 19:55:56',
+'hmsMirror_Metadata_Stage1'='2023-04-26 19:57:50',
 'bucketing_version'='2')</td>
 </tr>
 <tr>
-<td>Moving data to new Namespace</td>
-<td>FROM order_src_c13a9d6402374c1e9b6c95a8dd5b01e1 INSERT OVERWRITE TABLE order_src SELECT *</td>
-</tr>
-<tr>
 <td>Drop table</td>
-<td>DROP TABLE IF EXISTS order_src_c13a9d6402374c1e9b6c95a8dd5b01e1</td>
+<td>DROP TABLE IF EXISTS order_src_7d7e33290c2d4e2a913cb027bfe7601b</td>
 </tr>
 </table></td>
 </tr>
