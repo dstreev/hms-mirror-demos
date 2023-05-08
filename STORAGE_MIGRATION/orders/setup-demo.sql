@@ -94,6 +94,44 @@ OUTPUTFORMAT
 LOCATION
 'hdfs://HOME90/user/dstreev/datasets/orders_small';
 
+FROM
+    ORDER_SRC
+INSERT
+INTO TABLE
+    ORDER_ORC
+SELECT
+    ID
+     ,USER_ID
+     ,ORDER_DATE
+     ,STATUS
+INSERT INTO TABLE
+    ORDER_ITEM_ORC
+SELECT
+    ID
+     , OI.order_item_id
+     , OI.product_id
+     , OI.quantity
+     , OI.cost LATERAL VIEW EXPLODE(order_items) MI AS OI;
+
+FROM
+    ORDER_SRC
+INSERT
+INTO TABLE
+    ORDER_SMALL_${FILE_TYPE}
+SELECT
+    ID
+     ,USER_ID
+     ,ORDER_DATE
+     ,STATUS
+INSERT INTO TABLE
+    ORDER_ITEM_SMALL_${FILE_TYPE}
+SELECT
+    ID
+     , OI.order_item_id
+     , OI.product_id
+     , OI.quantity
+     , OI.cost LATERAL VIEW EXPLODE(order_items) MI AS OI;
+
 -- Managed Tables
 CREATE TABLE IF NOT EXISTS `mngd_order_item_orc`(
 `order_id` string,
