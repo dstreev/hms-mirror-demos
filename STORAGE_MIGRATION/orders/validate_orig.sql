@@ -1,5 +1,7 @@
 use sm_orders;
+
 describe database sm_orders;
+show tables;
 
 SHOW CREATE TABLE mngd_order_small_orc;
 SELECT * FROM mngd_order_small_orc LIMIT 10;
